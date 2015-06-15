@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+
+    {% load staticfiles %}
+
+    <!-- Import Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+
+    <!-- Import jQuery -->
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+
+    <!-- Import Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- Load custom CSS files last to win race conditions -->
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}"/>
+
+    <script type="text/javascript">
+        var app = angular.module('tutor', [])
+        .directive('navbar', function() {
+           return {
+               templateUrl: "{% static 'scripts/components/navbar/navbarView.html' %}"
+           };
+        });
+    </script>
+
+    <!-- TODO How should our angular files be loaded? -->
+    <script src="{% static 'scripts/components/navbar/navbarController.js' %}"></script>
+    <script src="{% static 'scripts/components/navbar/navbarService.js' %}"></script>
+</head>
+<body ng-app="tutor">
+{{ request.session.user }}
+    <div navbar></div>
+
+    <div class="container-fluid">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
